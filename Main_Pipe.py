@@ -164,7 +164,7 @@ def validNeighboringPipes(currentCoord,neighboringPipes,grid):
 
 
 
-file_Path = "C:\\Users\\seren\\Downloads\\coding_qual_input.txt"
+file_Path = ""
 connectedPipes = findAllConnectedPipes(file_Path)
 print(connectedPipes)
 
