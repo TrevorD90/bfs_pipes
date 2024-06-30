@@ -101,8 +101,44 @@ def validEndOfPipe(pipeChar):
 def createFinalString(connectedPipes):
     return ''.join(sorted(connectedPipes))
 
+def validNeighboringPipes(currentCoord,neighboringPipes,grid):
+    validPipes = []
+    for coord in neighboringPipes:
+        if isAConnectedPipe(currentCoord,coord,grid):
+            validPipes.append((coord))
+    return validPipes
+
+def printMap(grid):
+    maxX = findMaxX(grid)
+    maxY = findMaxY(grid)
+    startingPoint = (0,0)
+
+    map_grid = [[' ' for _ in range(maxY + 1)] for _ in range(maxX + 1)]
+    for i in range(maxX):
+        for j in range(maxY):
+            if (i,j) in grid:
+                map_grid[i][j] = getPipeCharacter((i,j),grid)
+
+    for line in map_grid:
+        print(''.join(line))
+
+def findMaxX(grid):
+    maxX = 0
+    for num in grid:
+        if num[0] > maxX:
+            maxX = num[0]
+    return maxX
+
+def findMaxY(grid):
+    maxY = 0
+    for num in grid:
+        if num[1] > maxY:
+            maxY = num[1]
+    return maxY
+
 def findAllConnectedPipes(file_Path):
     grid = createGrid(file_Path)
+    printMap(grid)
     startingPoint = findStartingPoint(grid)
     queue = [startingPoint]
     visitedCoords = []
@@ -126,43 +162,6 @@ def findAllConnectedPipes(file_Path):
                 queue.append(newCoord)
 
     return createFinalString(sorted(connectedPipes))
-
-def validNeighboringPipes(currentCoord,neighboringPipes,grid):
-    validPipes = []
-    for coord in neighboringPipes:
-        if isAConnectedPipe(currentCoord,coord,grid):
-            validPipes.append((coord))
-    return validPipes
-
-# def printMap(grid):
-#     maxX = findMaxX(grid)
-#     maxY = findMaxY(grid)
-#     startingPoint = (0,0)
-#
-#     map_grid = [[' ' for _ in range(maxY + 1)] for _ in range(maxX + 1)]
-#     for i in range(maxX):
-#         for j in range(maxY):
-#             if (i,j) in grid:
-#                 map_grid[i][j] = getPipeCharacter((i,j),grid)
-#
-#     for line in map_grid:
-#         print(''.join(line))
-#
-# def findMaxX(grid):
-#     maxX = 0
-#     for num in grid:
-#         if num[0] > maxX:
-#             maxX = num[0]
-#     return maxX
-#
-# def findMaxY(grid):
-#     maxY = 0
-#     for num in grid:
-#         if num[1] > maxY:
-#             maxY = num[1]
-#     return maxY
-
-
 
 file_Path = ""
 connectedPipes = findAllConnectedPipes(file_Path)
